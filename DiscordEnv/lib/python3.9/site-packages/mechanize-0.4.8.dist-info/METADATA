@@ -1,0 +1,139 @@
+Metadata-Version: 2.1
+Name: mechanize
+Version: 0.4.8
+Summary: Stateful, programmatic web browsing
+Home-page: https://github.com/python-mechanize/mechanize
+Author: Kovid Goyal
+Author-email: no@no.no
+License: BSD
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet
+Classifier: Topic :: Internet :: File Transfer Protocol (FTP)
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Browsers
+Classifier: Topic :: Internet :: WWW/HTTP :: Indexing/Search
+Classifier: Topic :: Internet :: WWW/HTTP :: Site Management
+Classifier: Topic :: Internet :: WWW/HTTP :: Site Management :: Link Checking
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Software Development :: Testing :: Traffic Generation
+Classifier: Topic :: System :: Archiving :: Mirroring
+Classifier: Topic :: System :: Networking :: Monitoring
+Classifier: Topic :: System :: Systems Administration
+Classifier: Topic :: Text Processing
+Classifier: Topic :: Text Processing :: Markup
+Classifier: Topic :: Text Processing :: Markup :: HTML
+Classifier: Topic :: Text Processing :: Markup :: XML
+License-File: LICENSE
+Requires-Dist: html5lib (>=0.999999999)
+Provides-Extra: binarytest
+Requires-Dist: lxml ; extra == 'binarytest'
+Requires-Dist: html5-parser ; extra == 'binarytest'
+Provides-Extra: fast
+Requires-Dist: html5-parser (>=0.4.4) ; extra == 'fast'
+Provides-Extra: test
+Requires-Dist: twisted ; extra == 'test'
+Requires-Dist: service-identity ; extra == 'test'
+Requires-Dist: six ; extra == 'test'
+Requires-Dist: html5lib ; extra == 'test'
+
+mechanize - Automate interaction with HTTP web servers
+##########################################################
+
+|pypi| |build|
+
+.. contents::
+
+
+Major features
+-----------------
+
+Stateful programmatic web browsing in Python
+
+- The browser class `mechanize.Browser` implements the
+  interface of `urllib2.OpenerDirector`, so any URL can
+  be opened not just `http`.
+
+- Easy HTML form filling.
+
+- Convenient link parsing and following.
+
+- Browser history (`.back()` and `.reload()` methods).
+
+- The `Referer` HTTP header is added properly (optional).
+
+- Automatic observance of `robots.txt <http://www.robotstxt.org/wc/norobots.html>`_.
+
+- Automatic handling of HTTP-Equiv and Refresh.
+
+
+Installation
+-----------------
+
+To install for normal usage:
+
+.. code-block:: bash
+
+    pip3 install mechanize
+
+To install for development:
+
+.. code-block:: bash
+
+    git clone https://github.com/python-mechanize/mechanize.git
+    cd mechanize
+    pip3 install -e .
+
+To install manually, simply add the `mechanize` sub-directory somewhere on your
+`PYTHONPATH`.
+
+
+Documentation
+---------------
+
+See https://mechanize.readthedocs.io/en/latest/
+
+Credits
+-----------------
+
+python-mechanize was the creation of John J. Lee. Maintenance was taken over by
+Kovid Goyal in 2017.
+
+Much of the code was originally derived from the work of the following people:
+
+- Gisle Aas -- [libwww-perl]
+
+- Jeremy Hylton (and many others) -- [urllib2]
+
+- Andy Lester -- [WWW::Mechanize]
+
+- Johnny Lee (coincidentally-named) -- MSIE CookieJar Perl code from which
+  mechanize's support for that is derived.
+
+Also:
+
+- Gary Poster and Benji York at Zope Corporation -- contributed significant
+  changes to the HTML forms code
+
+- Ronald Tschalar -- provided help with Netscape cookies
+
+Thanks also to the many people who have contributed bug reports and
+patches.
+
+.. |pypi| image:: https://img.shields.io/pypi/v/mechanize.svg?label=version
+    :target: https://pypi.python.org/pypi/mechanize
+    :alt: Latest version released on PyPi
+
+.. |build| image:: https://dev.azure.com/divok/mechanize/_apis/build/status/python-mechanize.mechanize?branchName=master
+    :target: https://dev.azure.com/divok/mechanize/_build/latest?definitionId=3&branchName=master
+    :alt: Build status of the master branch
+
+
