@@ -1,108 +1,102 @@
 #!/bin/sh
 
-# echo "Installing 42_Session_Alert"
+echo "Installing 42_Session_Alert"
 
-# build_launchAgent() {
-# 	cat << EOF >> 42_"$USER"_Session_alert.plist
-# <?xml version="1.0" encoding="UTF-8"?>
-# <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-# <plist version="1.0">
-#   <dict>
-#     <key>Label</key>
-#     <string>42_session_alert</string>
-#     <key>ProgramArguments</key>
-#     <array>
-#       <string>sh</string>
-#       <string>-c</string>
-#       <string>python3 </string>
-# 	  <string>/Users/$USER/42_Alerts/42_Session_Alert.py </string>
-#     </array>
-#     <key>RunAtLoad</key>
-#     <true/>
-#     <key>UserName</key>
-#     <string>$USER</string>
-#   </dict>
-# </plist>
-# EOF
-# }
 
-# build_42_Session_Alert() {
-# 	cat << EOF >> 42_"$USER"_Session_alert.plist
-# import os
-# import time
-# import socket
-# import requests
-# import selenium
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.chrome.options import Options
-# from discord_webhook import DiscordWebhook
+build_42_Session_Alert() {
+	cat << EOF > 42_Session_Alert.py
+import os
+import time
+import socket
+import subprocess
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from discord_webhook import DiscordWebhook
 
-# # Grabbing Logtime, I know it's too much!
-# chrome_options = Options()
-# chrome_options.add_argument("--headless=new")
-# driver = webdriver.Chrome(options=chrome_options)
 
-# driver.get('http://logtime-med.1337.ma/')
+HALF_HOUR = 18000
 
-# main = driver.find_element(By.ID, '__next')
-# sub_main = main.find_element(By.CLASS_NAME, 'counter_homeP__mg2AR')
-# form = sub_main.find_element(By.TAG_NAME, "form")
-# login = form.find_element(By.NAME, "login").send_keys(os.getenv('USER'))
-# form.find_element(By.TAG_NAME,'button').click()
-# time.sleep(1)
-# parent_elem = form.find_element(By.TAG_NAME, 'h3')
-# sub_elements = parent_elem.find_elements(By.TAG_NAME, 'span')
+# Grabbing Logtime, I know it's too much!
+chrome_options = Options()
+chrome_options.add_argument("--headless=new")
+driver = webdriver.Chrome(options=chrome_options)
 
-# logtime = sub_elements[1].text
-# driver.quit()
-# # =======================================================
+driver.get('http://logtime-med.1337.ma/')
 
-# # Payload Data
-# hostname = socket.gethostname()
-# payload = "<@$1>" + "\n\
-# Computer: " + hostname + "\n\
-# Date: " + time.ctime(time.time()) + "\n\
-# Current Logged-in hours: " + logtime + "\n\
-# Warning you've been logged out for more than 30 mins"
-# # ========================================================
+main = driver.find_element(By.ID, '__next')
+sub_main = main.find_element(By.CLASS_NAME, 'counter_homeP__mg2AR')
+form = sub_main.find_element(By.TAG_NAME, "form")
+login = form.find_element(By.NAME, "login").send_keys(os.getenv('USER'))
+form.find_element(By.TAG_NAME,'button').click()
+time.sleep(1)
+parent_elem = form.find_element(By.TAG_NAME, 'h3')
+sub_elements = parent_elem.find_elements(By.TAG_NAME, 'span')
 
-# # Checking idle session
-# start_date = time.time()
-# current_time = time.time()
-# while current_time - start_date < 1800:
-#     time.sleep(1800)
-#     current_time = time.time()
+logtime = sub_elements[1].text
+driver.quit()
+# =======================================================
 
-# if current_time - start_date > 1800:
-# 	webhook = DiscordWebhook("$2", content=payload)
-# 	response = webhook.execute()
-# # ========================================================
-# EOF
-# }
+# Payload Data
+hostname = socket.gethostname()
+payload = "<@326490884759748619>" + "\n\
+Computer: " + hostname + "\n\
+Date: " + time.ctime(time.time()) + "\n\
+Current Logged-in hours: " + logtime + "\n\
+Warning you've been logged out for more than 30 mins"
+# ========================================================
 
-# read_user_input() {
-# 	echo "Put your discord uid here (lookup this repo's github for more information)"
-# 	read user_id
-# 	echo "Put in your discord webhook link."
-# 	read webhook_link
-# 	echo "Are you sure the above information is correct? (y/n)"
-# 	read user_ans
-# 	if [ [ "$user_ans" = "y" || "$user_ans" = "yes" ] ]
-# 	then
-# 		build_42_Session_Alert $user_id $webhook_link
-# 		build_launchAgent
-# 		mkdir -p ~/42_Alerts
-# 		cp -p 42_"$USER"_Session_alert.plist ~/Library/LaunchAgents
-# 		cp -p 42_Session_Alert.py ~/42_Alerts
+# Checking idle session
+
+os.chdir('/Users/$USER/42_Alerts/')
+
+sent_warning = 0
+outtime = subprocess.check_output(["Watcher/sleepwatcher", "-g"])
+while 1:
+    outtime = 0
+    while int(outtime) < HALF_HOUR:
+        sent_warning = 0
+        outtime = subprocess.check_output(["Watcher/sleepwatcher", "-g"])
+        time.sleep(5)
+    if int(outtime) >= HALF_HOUR and sent_warning == 0:
+            webhook = DiscordWebhook("https://discord.com/api/webhooks/1158403904816558191/Hp6n5E5u7vUSt_GVvu0_PdXEZCJXODVOUyyRZA_OeJslalDGA_Oy4ZbRBIxpeEucyiFW", content=payload)
+            response = webhook.execute()
+            sent_warning = 1
+# ========================================================
+EOF
+
+	cat << EOF > RUN_MONITOR.sh
+#!/bin/bash
+source ~/42_Alerts/DiscordEnv/bin/activate
+python3 ~/42_Alerts/42_Session_Alert.py
+EOF
+	
+}
+
+read_user_input() {
+	echo "Put your discord uid here (lookup this repo's github for more information)"
+	read user_id
+	echo "Put in your discord webhook link."
+	read webhook_link
+	echo "Are you sure the above information is correct? (y/n)"
+	read user_ans
+	if [ "$user_ans" = "y" ]
+	then
+		build_42_Session_Alert $user_id $webhook_link
+		mkdir -p ~/42_Alerts
+		cp -p 42_Session_Alert.py ~/42_Alerts
+        cp -p RUN_MONITOR.sh ~/42_Alerts
+        cp -pr Watcher ~/42_Alerts
+        cp -pr DiscordEnv ~/42_Alerts
+        echo "The Monitor has been installed in your home directory, visit the github page back to continue with the guide."
 		
-# 	elif [ [ "$user_ans" = "n" || "$user_ans" = "no" ] ]
-# 	then
-# 		read_user_input
-# 	else
-# 		echo "Please choose the right answer next time."
-# 		exit 1
-# 	fi
-# }
+	elif [ "$user_ans" = "n" ]
+	then
+		read_user_input
+	else
+		echo "Please choose the right answer next time."
+		exit 1
+	fi
+}
 
-# read_user_input
+read_user_input
