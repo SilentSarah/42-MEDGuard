@@ -15,7 +15,7 @@
 
 ### Installation:
 
-- **Before setting up the monitoring kit we have acquire some info**
+- **Before setting up the monitoring kit we have acquire some info - FYI: these steps will be done only once.**
 - First: you have to create a discord server the following video link should illustrate the process behind it.
   [Making the server](https://i.imgur.com/MfWDWH3.mp4)
 - Second: you have to make a webhook for the server that you just created and save somewhere it.
