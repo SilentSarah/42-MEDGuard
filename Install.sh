@@ -15,7 +15,7 @@ from selenium.webdriver.chrome.options import Options
 from discord_webhook import DiscordWebhook
 
 
-HALF_HOUR = 18000
+HALF_HOUR = 50
 
 # Grabbing Logtime, I know it's too much!
 chrome_options = Options()
@@ -48,20 +48,19 @@ Warning you've been logged out for more than 30 mins"
 
 # Checking idle session
 
-os.chdir('/Users/$USER/42_Alerts/')
+os.chdir('/Users/hmeftah/42_Alerts/')
 
 sent_warning = 0
-outtime = subprocess.check_output(["Watcher/sleepwatcher", "-g"])
 while 1:
-    outtime = 0
-    while int(outtime) < HALF_HOUR:
-        sent_warning = 0
-        outtime = subprocess.check_output(["Watcher/sleepwatcher", "-g"])
-        time.sleep(5)
-    if int(outtime) >= HALF_HOUR and sent_warning == 0:
+    outtime = subprocess.check_output(["Watcher/sleepwatcher", "-g"])
+    if int(outtime) >= HALF_HOUR:
+        time.sleep(2.5)
+        if int(sent_warning) == 0:
             webhook = DiscordWebhook("https://discord.com/api/webhooks/1158403904816558191/Hp6n5E5u7vUSt_GVvu0_PdXEZCJXODVOUyyRZA_OeJslalDGA_Oy4ZbRBIxpeEucyiFW", content=payload)
             response = webhook.execute()
             sent_warning = 1
+    else:
+        sent_warning = 0
 # ========================================================
 EOF
 
