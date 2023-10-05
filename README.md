@@ -4,6 +4,11 @@
 
 **Warning: this monitoring kit will only work for 1337 MED or 42 MED and probably won't work elsewhere.**
 
+### Pre-requisites:
+
+* [Selenium](https://pypi.org/project/selenium/)
+* [Discord_Webhook](https://pypi.org/project/discord-webhook/)
+
 ### How does it work:
 
 - **42-MEDGUARD** works by checking for inactivity from the user, once a threshold has been reached it will fire up letting the user know that the session is about to log out, included is the total amount of logged hours and the hostname of that MAC with the date, the monitor will reset once an activity has been detected.
