@@ -15,7 +15,7 @@ from selenium.webdriver.chrome.options import Options
 from discord_webhook import DiscordWebhook
 
 
-HALF_HOUR = 50
+HALF_HOUR = 18000
 
 # Grabbing Logtime, I know it's too much!
 chrome_options = Options()
