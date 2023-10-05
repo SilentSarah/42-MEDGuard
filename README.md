@@ -22,7 +22,7 @@
   [Webhook Creation](https://i.imgur.com/RAoMfUC.mp4)
 - Third: you have to get your own UID (User ID) and save it next to the webhook saved earlier
   [Acquiring UID](https://i.imgur.com/o860PVn.mp4)
-- **Now into script setup part:**
+- **Now onto script setup part:**
 - Clone this repo anywhere in your session.
 - Execute the **Install.sh** script with the following command:
 
