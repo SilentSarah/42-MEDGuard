@@ -13,9 +13,20 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from discord_webhook import DiscordWebhook
+import discord_webhook
 
 
-HALF_HOUR = 1800
+webhook = DiscordWebhook("$2")
+
+hostname = socket.gethostname()
+payload = "42 MEDGUARD has been initialized, starting monitor at: " + hostname + " for: <@$1>\n"
+embed_payload = discord_webhook.DiscordEmbed(title="Initialization", description=payload, color="3ace1a")
+webhook.add_embed(embed_payload)
+webhook.execute()
+webhook.remove_embed(0)
+
+
+HALF_HOUR = 1500
 
 # Grabbing Logtime, I know it's too much!
 chrome_options = Options()
@@ -37,11 +48,6 @@ logtime = sub_elements[1].text
 driver.quit()
 # =======================================================
 
-# Payload Data
-hostname = socket.gethostname()
-payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + logtime + "\nWarning you've been logged out for more than 30 mins"
-# ========================================================
-
 # Checking idle session
 
 os.chdir('/Users/$USER/42_Alerts/')
@@ -53,12 +59,17 @@ while 1:
     if int(outtime) >= HALF_HOUR:
         if sent_warning == 0:
             sent_warning = 1
-            webhook = DiscordWebhook("$2", content=payload)
+            # Payload Data
+            hostname = socket.gethostname()
+            payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + logtime + "\nWarning you've been logged out for more than 30 mins"
+            embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
+            webhook.add_embed(embed_payload)
             response = webhook.execute()
+            webhook.remove_embed(0)
     else:
         sent_warning = 0
-    print(int(outtime))
 # ========================================================
+
 EOF
 
 	cat << EOF > RUN_MONITOR.sh
