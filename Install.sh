@@ -44,7 +44,7 @@ payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.tim
 
 # Checking idle session
 
-os.chdir('/Users/hmeftah/42_Alerts/')
+os.chdir('/Users/$USER/42_Alerts/')
 
 sent_warning = 0
 while 1:
