@@ -54,20 +54,22 @@ os.chdir('/Users/$USER/42_Alerts/')
 
 sent_warning = 0
 while 1:
-    outtime = int(subprocess.check_output(["Watcher/sleepwatcher", "-g"])) / 10
-    time.sleep(2.5)
-    if int(outtime) >= HALF_HOUR:
-        if sent_warning == 0:
-            sent_warning = 1
-            # Payload Data
-            hostname = socket.gethostname()
-            payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + logtime + "\nWarning you've been logged out for more than 30 mins"
-            embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
-            webhook.add_embed(embed_payload)
-            response = webhook.execute()
-            webhook.remove_embed(0)
-    else:
-        sent_warning = 0
+    start_track = int(subprocess.check_output(["bash", "DetectLock.sh"]))
+    if (start_track == 70534):
+        outtime = int(subprocess.check_output(["Watcher/sleepwatcher", "-g"])) / 10
+        time.sleep(2.5)
+        if int(outtime) >= HALF_HOUR:
+            if sent_warning == 0:
+                sent_warning = 1
+                # Payload Data
+                hostname = socket.gethostname()
+                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + logtime + "\nWarning you've been logged out for more than 30 mins"
+                embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
+                webhook.add_embed(embed_payload)
+                response = webhook.execute()
+                webhook.remove_embed(0)
+        else:
+            sent_warning = 0
 # ========================================================
 
 EOF
@@ -93,6 +95,7 @@ read_user_input() {
 		mkdir -p ~/42_Alerts
 		cp -p 42_Session_Alert.py ~/42_Alerts
         cp -p RUN_MONITOR.sh ~/42_Alerts
+        cp -p DetectLock.sh ~/42_Alerts
         cp -pr Watcher ~/42_Alerts
         cp -pr DiscordEnv ~/42_Alerts
         echo "The Monitor has been installed in your home directory, visit the github page back to continue with the guide."
