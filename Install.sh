@@ -15,6 +15,22 @@ from selenium.webdriver.chrome.options import Options
 from discord_webhook import DiscordWebhook
 import discord_webhook
 
+def GrabLogtime():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.get('http://logtime-med.1337.ma/')
+    main = driver.find_element(By.ID, '__next')
+    sub_main = main.find_element(By.CLASS_NAME, 'counter_homeP__mg2AR')
+    form = sub_main.find_element(By.TAG_NAME, "form")
+    login = form.find_element(By.NAME, "login").send_keys(os.getenv('USER'))
+    form.find_element(By.TAG_NAME,'button').click()
+    time.sleep(1)
+    parent_elem = form.find_element(By.TAG_NAME, 'h3')
+    sub_elements = parent_elem.find_elements(By.TAG_NAME, 'span')
+    logtime = sub_elements[1].text
+    driver.quit()
+    return logtime
 
 webhook = DiscordWebhook("$2")
 
@@ -28,24 +44,7 @@ webhook.remove_embed(0)
 
 HALF_HOUR = 1500
 
-# Grabbing Logtime, I know it's too much!
-chrome_options = Options()
-chrome_options.add_argument("--headless=new")
-driver = webdriver.Chrome(options=chrome_options)
 
-driver.get('http://logtime-med.1337.ma/')
-
-main = driver.find_element(By.ID, '__next')
-sub_main = main.find_element(By.CLASS_NAME, 'counter_homeP__mg2AR')
-form = sub_main.find_element(By.TAG_NAME, "form")
-login = form.find_element(By.NAME, "login").send_keys(os.getenv('USER'))
-form.find_element(By.TAG_NAME,'button').click()
-time.sleep(1)
-parent_elem = form.find_element(By.TAG_NAME, 'h3')
-sub_elements = parent_elem.find_elements(By.TAG_NAME, 'span')
-
-logtime = sub_elements[1].text
-driver.quit()
 # =======================================================
 
 # Checking idle session
@@ -63,7 +62,7 @@ while 1:
                 sent_warning = 1
                 # Payload Data
                 hostname = socket.gethostname()
-                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + logtime + "\nWarning you've been logged out for more than 30 mins"
+                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + GrabLogtime() + "\nWarning you've been logged out for more than 30 mins"
                 embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
                 webhook.add_embed(embed_payload)
                 response = webhook.execute()
