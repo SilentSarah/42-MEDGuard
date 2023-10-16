@@ -62,7 +62,7 @@ while 1:
                 sent_warning = 1
                 # Payload Data
                 hostname = socket.gethostname()
-                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nCurrent Logged-in hours: " + GrabLogtime() + "\nWarning you've been logged out for more than 30 mins"
+                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nWarning you've been logged out for more than 30 mins"
                 embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
                 webhook.add_embed(embed_payload)
                 response = webhook.execute()
