@@ -39,3 +39,6 @@
   [Setting 42_MEDGUARD to run at login](https://i.imgur.com/58m3sSd.mp4)
 - Log out and log in back again and BAM! you now have the monitor ready and will let you know whenever your session is about to log out.
   **Enjoy!**
+
+  ### UPDATES:
+  **BETA-001**: Monitor will start counting after the session becomes locked.
