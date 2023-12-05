@@ -17,11 +17,11 @@
 
 - **Before setting up the monitoring kit we have acquire some info - FYI: these steps will be done only once.**
 - First: you have to create a discord server the following video link should illustrate the process behind it.
-  [Making the server](https://i.imgur.com/MfWDWH3.mp4)
+- [VIDEO: Making the server](https://i.imgur.com/MfWDWH3.mp4)
 - Second: you have to make a webhook for the server that you just created and save somewhere it.
-  [Webhook Creation](https://i.imgur.com/RAoMfUC.mp4)
+- [VIDEO: Webhook Creation](https://i.imgur.com/RAoMfUC.mp4)
 - Third: you have to get your own UID (User ID) and save it next to the webhook saved earlier
-  [Acquiring UID](https://i.imgur.com/o860PVn.mp4)
+- [VIDEO: Acquiring UID](https://i.imgur.com/o860PVn.mp4)
 - **Now onto script setup part:**
 - Clone this repo anywhere in your session.
 - Execute the **Install.sh** script with the following command:
@@ -33,10 +33,10 @@
   the install script will copy them for you into a new directory called **42_Alerts** inside your home directory.
 - **Setting the script for it be loaded at log in**
 - First: Open up automator and choose application and then type in the search bar 'Run shell script' and fill the prompt with the following command ``bash ~/42_Alerts/RUN_MONITOR.sh``
-  [Creation of the 42_MEDGUARD](https://i.imgur.com/sxBNjLh.mp4)
+- [VIDEO: Creation of the 42_MEDGUARD](https://i.imgur.com/sxBNjLh.mp4)
 - Second copy the newly created app to the **42_Alerts** folder inside your home directory.
 - Lastly open system preferences (settings) and search for **Login items**. click on the small plus sign under the list and look for the app you created before using automator.
-  [Setting 42_MEDGUARD to run at login](https://i.imgur.com/58m3sSd.mp4)
+- [VIDEO: Setting 42_MEDGUARD to run at login](https://i.imgur.com/58m3sSd.mp4)
 - Log out and log in back again and BAM! you now have the monitor ready and will let you know whenever your session is about to log out.
   **Enjoy!**
 
