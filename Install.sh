@@ -2,7 +2,6 @@
 
 echo "Installing 42_Session_Alert"
 
-
 build_42_Session_Alert() {
 	cat << EOF > 42_Session_Alert.py
 import os
@@ -62,7 +61,7 @@ while 1:
                 sent_warning = 1
                 # Payload Data
                 hostname = socket.gethostname()
-                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nWarning you've been logged out for more than 30 mins"
+                payload = "<@$1>" + "\nComputer: " + hostname + "\nDate: " + time.ctime(time.time()) + "\nWarning you've been logged out for more than 25 mins - you have 10 minutes grace period"
                 embed_payload = discord_webhook.DiscordEmbed(title="Inactivity Warning", description=payload, color="dc143c")
                 webhook.add_embed(embed_payload)
                 response = webhook.execute()
