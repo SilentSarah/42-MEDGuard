@@ -6,8 +6,9 @@
 
 ### Pre-requisites:
 
-* [Selenium](https://pypi.org/project/selenium/)
-* [Discord_Webhook](https://pypi.org/project/discord-webhook/)
+- You need to install these pre-requisites before installing the monitor:
+- [Selenium](https://pypi.org/project/selenium/)
+- [Discord_Webhook](https://pypi.org/project/discord-webhook/)
 
 ### How does it work:
 
