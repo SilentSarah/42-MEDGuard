@@ -37,7 +37,7 @@
 - Second copy the newly created app to the **42_Alerts** folder inside your home directory.
 - Lastly open system preferences (settings) and search for **Login items**. click on the small plus sign under the list and look for the app you created before using automator.
 - [VIDEO: Setting 42_MEDGUARD to run at login](https://i.imgur.com/58m3sSd.mp4)
-- Log out and log in back again and BAM! you now have the monitor ready and will let you know whenever your session is about to log out.
+- Log out and log back in and BAM! now you have the monitor ready and it will let you know whenever your session is about to log out.
   **Enjoy!**
 
   ### UPDATES:
