@@ -48,4 +48,4 @@
 
   **BETA-001**: Monitor will start counting after the session becomes locked.
 
-  **BETA-002:** I hate mentally ill people, really.
+  **BETA-002:** Monitor timer accuracy has improved.
