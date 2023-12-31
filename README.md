@@ -4,11 +4,14 @@
 
 **Warning: this monitoring kit will only work for 1337 MED or 42 MED and probably won't work elsewhere.**
 
+**Warning 2: I am not responsible for the misuse of this software.**
+
 ### Pre-requisites:
 
 - You need to install these pre-requisites before installing the monitor:
 - [Selenium](https://pypi.org/project/selenium/)
 - [Discord_Webhook](https://pypi.org/project/discord-webhook/)
+- [Quartz](https://pypi.org/project/pyobjc-framework-Quartz/)
 
 ### How does it work:
 
@@ -42,4 +45,7 @@
   **Enjoy!**
 
   ### UPDATES:
+
   **BETA-001**: Monitor will start counting after the session becomes locked.
+
+  **BETA-002:** I hate mentally ill people, really.

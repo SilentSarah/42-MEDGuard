@@ -6,13 +6,14 @@ build_42_Session_Alert() {
 	cat << EOF > 42_Session_Alert.py
 import os
 import time
+import Quartz
 import socket
 import subprocess
+import discord_webhook
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from discord_webhook import DiscordWebhook
-import discord_webhook
 
 def GrabLogtime():
     chrome_options = Options()
@@ -30,6 +31,10 @@ def GrabLogtime():
     logtime = sub_elements[1].text
     driver.quit()
     return logtime
+
+def DetectLock():
+    d = Quartz.CGSessionCopyCurrentDictionary()
+    return ('CGSSessionScreenIsLocked' in d.keys())
 
 webhook = DiscordWebhook("$2")
 
@@ -52,8 +57,9 @@ os.chdir('/Users/$USER/42_Alerts/')
 
 sent_warning = 0
 while 1:
-    start_track = int(subprocess.check_output(["bash", "DetectLock.sh"]))
-    if (start_track == 70534):
+    start_track = DetectLock()
+    time.sleep(1)
+    if (start_track == True):
         outtime = int(subprocess.check_output(["Watcher/sleepwatcher", "-g"])) / 10
         time.sleep(2.5)
         if int(outtime) >= HALF_HOUR:
@@ -69,7 +75,6 @@ while 1:
         else:
             sent_warning = 0
 # ========================================================
-
 EOF
 
 	cat << EOF > RUN_MONITOR.sh
@@ -90,12 +95,15 @@ read_user_input() {
 	if [ "$user_ans" = "y" ]
 	then
 		build_42_Session_Alert $user_id $webhook_link
+        echo "Installing 42 MEDGUARD, Please Wait..."
 		mkdir -p ~/42_Alerts
 		cp -p 42_Session_Alert.py ~/42_Alerts
         cp -p RUN_MONITOR.sh ~/42_Alerts
-        cp -p DetectLock.sh ~/42_Alerts
         cp -pr Watcher ~/42_Alerts
         cp -pr DiscordEnv ~/42_Alerts
+        pip3 install discord_webhook
+        pip3 install selenium
+        pip3 install pyobjc-framework-Quartz
         echo "The Monitor has been installed in your home directory, visit the github page back to continue with the guide."
 		
 	elif [ "$user_ans" = "n" ]
